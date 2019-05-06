@@ -23,7 +23,7 @@ let fileProcesser = async (event) => {
             fs.writeFileSync('/tmp/' + event.inputName, base64Data, globalConstants.STRING_FORMATS.BASE64)
 
             if(_.includes(supportedFormats, inputFileExtension) && _.includes(supportedFormats, outputFileExtension)) {
-                let data = await convertAndUploadImage(event.inputname, event.outputname, event.imageArguments)
+                let data = await convertAndUploadImage(event.inputName, event.outputName, event.imageArguments)
                 response.data = data
             }
         }
