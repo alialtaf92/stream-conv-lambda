@@ -20,7 +20,7 @@ let fileProcesser = async (event) => {
             let outputFileExtension = path.extname(event.outputName).toLowerCase()
             var base64Data = event.file.replace(/^data:image\/png;base64,/, "");
 
-            fs.writeFileSync(event.inputName, base64Data, globalConstants.STRING_FORMATS.BASE64)
+            fs.writeFileSync('/tmp/' + event.inputName, base64Data, globalConstants.STRING_FORMATS.BASE64)
 
             if(_.includes(supportedFormats, inputFileExtension) && _.includes(supportedFormats, outputFileExtension)) {
                 let data = await convertAndUploadImage(event.inputname, event.outputname, event.imageArguments)
@@ -44,14 +44,14 @@ function convertAndUploadImage (filename, outputName, args)
 {
     
     return Promise((resolve, reject) => {
-        args.unshift(filename)
-        args.push(outputName)
+        args.unshift('/tmp/' + filename)
+        args.push('/tmp/' + outputName)
 
         im.convert(args, function(err, stdout, stderr) {
             if(err)
                 console.log('err in im conv : ', err)
 
-            let outfile = fs.readFileSync(outputName)
+            let outfile = fs.readFileSync('/tmp/' + outputName)
            resolve(outfile)
         });
     })
