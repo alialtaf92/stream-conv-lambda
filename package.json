@@ -1,0 +1,19 @@
+{
+  "name": "lambda-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ali Altaf",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.437.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^7.0.0",
+    "http-status-codes": "^1.3.2",
+    "imagemagick": "^0.1.3",
+    "jsonwebtoken": "^8.5.1"
+  }
+}
