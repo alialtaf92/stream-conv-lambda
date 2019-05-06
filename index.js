@@ -7,29 +7,29 @@ var im = require('imagemagick')
  
 let fileProcesser = async (event) => {
     console.log('event started')
-    process.env.PATH = process.env.PATH + ':' + process.env.LAMBDA_TASK_ROOT + ':/tmp'
     let response = {}
     try {
 
         if (!event || !event.inputName || !event.outputName || !event.file || !event.imageArguments) {
-            let err = errorHandler.setParamsValidationError(req.body, 'inputName', 'outputName', 'file', 'imageArguments')
+            let err = errorHandler.setParamsValidationError(event, 'inputName', 'outputName', 'file', 'imageArguments')
             response = err
             return response
         } else {
             let supportedFormats = ['.png', '.jpg']
-            let inputFileExtension = path.extname(req.body.inputName).toLowerCase()
-            let outputFileExtension = path.extname(req.body.outputName).toLowerCase()
+            let inputFileExtension = path.extname(event.inputName).toLowerCase()
+            let outputFileExtension = path.extname(event.outputName).toLowerCase()
             var base64Data = req.body.file.replace(/^data:image\/png;base64,/, "");
 
-            fs.writeFileSync(req.body.inputName, base64Data, globalConstants.STRING_FORMATS.BASE64)
+            fs.writeFileSync(event.inputName, base64Data, globalConstants.STRING_FORMATS.BASE64)
 
             if(_.includes(supportedFormats, inputFileExtension) && _.includes(supportedFormats, outputFileExtension)) {
-                let data = await convertAndUploadImage(res, req.body.inputname, req.body.outputname, req.body.imageArguments)
+                let data = await convertAndUploadImage(event.inputname, event.outputname, event.imageArguments)
                 response.data = data
             }
         }
         
         response.statusCode = 200
+        return response
     } catch (err) {
         console.log('err is at end is : ', err)
         response = {
@@ -40,7 +40,7 @@ let fileProcesser = async (event) => {
     }
 };
 
-function convertAndUploadImage (res, filename, outputName, args)
+function convertAndUploadImage (filename, outputName, args)
 {
     
     return Promise((resolve, reject) => {
