@@ -4,7 +4,7 @@ const errorHandler = require('./errorHandler')
 const globalConstants = require('./globalConstants')
 var path = require('path')
 var im = require('imagemagick')
- 
+const _ = require('lodash')
 let fileProcesser = async (event) => {
     console.log('event started')
     let response = {}
