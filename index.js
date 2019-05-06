@@ -18,7 +18,7 @@ let fileProcesser = async (event) => {
             let supportedFormats = ['.png', '.jpg']
             let inputFileExtension = path.extname(event.inputName).toLowerCase()
             let outputFileExtension = path.extname(event.outputName).toLowerCase()
-            var base64Data = req.body.file.replace(/^data:image\/png;base64,/, "");
+            var base64Data = event.file.replace(/^data:image\/png;base64,/, "");
 
             fs.writeFileSync(event.inputName, base64Data, globalConstants.STRING_FORMATS.BASE64)
 
