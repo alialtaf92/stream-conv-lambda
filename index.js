@@ -43,7 +43,7 @@ let fileProcesser = async (event) => {
 function convertAndUploadImage (filename, outputName, args)
 {
     
-    return Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         args.unshift('/tmp/' + filename)
         args.push('/tmp/' + outputName)
 
